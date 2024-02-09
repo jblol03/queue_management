@@ -12,13 +12,13 @@ Certainly! Below is an example README.md file for a Django-based backend project
 1. **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/your-username/queue_management.git
+    git clone https://github.com/pritam-ravani/queue.git
     ```
 
 2. **Navigate to the Project Directory:**
 
     ```bash
-    cd queue_management
+    cd queue/queue_management
     ```
 
 3. **Install Dependencies:**
@@ -111,6 +111,3 @@ Certainly! Below is an example README.md file for a Django-based backend project
 
 - Make sure you have Python, Django, and Flutter installed on your machine.
 - Adjust the clone URLs based on your repository locations.
-- For more detailed instructions, refer to the individual README files in each project directory.
-
-This README provides a basic structure. Customize it based on the specific needs and features of your projects. Ensure to include any additional setup steps, configuration details, and project-specific information.
