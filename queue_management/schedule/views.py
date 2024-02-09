@@ -1,15 +1,23 @@
-from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from .models import Day, Shift, Slot
-from . serializers import DaySerializer, ShiftSerializer, SlotSerializer
+from .serializers import DaySerializer, ShiftSerializer, SlotSerializer
 
-class DayListCreateView(generics.ListCreateAPIView):
-    queryset = Day.objects.all()
-    serializer_class = DaySerializer
+class CombinedScheduleView(APIView):
+    def get(self, request):
+        days = Day.objects.all()
+        shifts = Shift.objects.all()
+        slots = Slot.objects.all()
 
-class ShiftListCreateView(generics.ListCreateAPIView):
-    queryset = Shift.objects.all()
-    serializer_class  = ShiftSerializer
+        day_serializer = DaySerializer(days, many=True)
+        shift_serializer = ShiftSerializer(shifts, many=True)
+        slot_serializer = SlotSerializer(slots, many=True)
 
-class SlotListCreateView(generics.ListCreateAPIView):
-    queryset = Slot.objects.all()
-    serializer_class = SlotSerializer
+        combined_data = {
+            'days': day_serializer.data,
+            'shifts': shift_serializer.data,
+            'slots': slot_serializer.data,
+        }
+
+        return Response(combined_data, status=status.HTTP_200_OK)
