@@ -14,12 +14,12 @@ class ProfilePage extends StatelessWidget {
             Text('Company Name:'), //Fetch data from API
             Text('Services:'), //Fetch data from API
             Text('Information:'), //Fetch data from API
-            ElevatedButton(
-              onPressed: () {
-                //Navigate to add schedule page
-              },
-              child: Text('Add Schedule'),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     //Navigate to add schedule page
+            //   },
+            //   child: Text('Add Schedule'),
+            // ),
           ],
         )));
   }
