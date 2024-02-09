@@ -1,5 +1,5 @@
 # Queue Management System
-Certainly! Below is an example README.md file for a Django-based backend project (`queue_management`) and a Flutter-based frontend project (`queue_ui`). The README includes code snippets for cloning the repositories and running the necessary commands for Django and Flutter.
+The README includes code snippets for cloning the repositories and running the necessary commands for Django and Flutter.
 
 ### queue_management (Django Backend)
 
