@@ -45,6 +45,9 @@ class _LoginPageState extends State<LoginPage> {
               );
             } else {
               //Handle Login Failure
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Login Failed. Please try again."),
+              ));
             }
           },
           child: const Text("Login"),
