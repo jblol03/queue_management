@@ -41,6 +41,10 @@ class User(AbstractBaseUser):
       unique=True,
   )
   name = models.CharField(max_length=200)
+  organization = models.CharField(max_length=200, blank=True, null=True)
+  services = models.CharField(max_length=200, blank=True, null=True)
+  information = models.TextField(blank=True, null=True)
+
   is_active = models.BooleanField(default=True)
   is_admin = models.BooleanField(default=False)
   created_at = models.DateTimeField(auto_now_add=True)
