@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:queue_ui/pages/profile_page.dart';
-import 'package:queue_ui/services/auth_service.dart';
+import 'package:queue_ui/services/api_services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
