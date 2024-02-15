@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from account.serializers import SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, UserPasswordResetSerializer, UserProfileSerializer, UserRegistrationSerializer
 from django.contrib.auth import authenticate
 from account.renderers import UserRenderer
+from rest_framework.renderers import BrowsableAPIRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 
@@ -16,7 +17,8 @@ def get_tokens_for_user(user):
   }
 
 class UserRegistrationView(APIView):
-  renderer_classes = [UserRenderer]
+  renderer_classes = [UserRenderer, BrowsableAPIRenderer]
+  serializer_class=UserRegistrationSerializer
   def post(self, request, format=None):
     serializer = UserRegistrationSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -25,7 +27,9 @@ class UserRegistrationView(APIView):
     return Response({'token':token, 'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
 
 class UserLoginView(APIView):
-  renderer_classes = [UserRenderer]
+  renderer_classes = [UserRenderer, BrowsableAPIRenderer]
+  serializer_class=UserLoginSerializer
+
   def post(self, request, format=None):
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -39,14 +43,17 @@ class UserLoginView(APIView):
       return Response({'errors':{'non_field_errors':['Email or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
 
 class UserProfileView(APIView):
-  renderer_classes = [UserRenderer]
+  renderer_classes = [UserRenderer, BrowsableAPIRenderer]
+  serializer_class=UserProfileSerializer
+
   permission_classes = [IsAuthenticated]
   def get(self, request, format=None):
     serializer = UserProfileSerializer(request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserChangePasswordView(APIView):
-  renderer_classes = [UserRenderer]
+  renderer_classes = [UserRenderer, BrowsableAPIRenderer]
+  serializer_class=UserChangePasswordSerializer
   permission_classes = [IsAuthenticated]
   def post(self, request, format=None):
     serializer = UserChangePasswordSerializer(data=request.data, context={'user':request.user})
@@ -54,14 +61,16 @@ class UserChangePasswordView(APIView):
     return Response({'msg':'Password Changed Successfully'}, status=status.HTTP_200_OK)
 
 class SendPasswordResetEmailView(APIView):
-  renderer_classes = [UserRenderer]
+  renderer_classes = [UserRenderer, BrowsableAPIRenderer]
+  serializer_class=SendPasswordResetEmailSerializer
   def post(self, request, format=None):
     serializer = SendPasswordResetEmailSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     return Response({'msg':'Password reset link sent. Please check your Email'}, status=status.HTTP_200_OK)
 
 class UserPasswordResetView(APIView):
-  renderer_classes = [UserRenderer]
+  renderer_classes = [UserRenderer, BrowsableAPIRenderer]
+  serializer_class=UserPasswordResetSerializer
   def post(self, request, uid, token, format=None):
     serializer = UserPasswordResetSerializer(data=request.data, context={'uid':uid, 'token':token})
     serializer.is_valid(raise_exception=True)
