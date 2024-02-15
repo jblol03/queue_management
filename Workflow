@@ -1,51 +1,58 @@
-Mobile App Queue Management System Architecture
+Queue Management System Architecture
 
 Components:
 
-Mobile App User Interface (UI):
+Flutter Mobile App (Frontend):
 
-Customer UI: Allows customers to view services, join queues, and monitor their status.
-Agent UI: Enables agents to manage their queues, view customer information, and update request statuses.
-Queue Manager (Backend System):
+Customer Interface: Allows customers to select services, join queues, and view their queue status.
+Agent Interface: Enables agents to manage queues, serve customers, and update request statuses.
+Django Backend Server:
 
-Handles logic for queue ordering, customer-agent matching, and real-time status updates.
-Notification Service:
+Handles all backend logic, including queue management, user authentication, and data persistence.
+Database:
 
-Sends push notifications to customers and agents for queue updates and alerts.
-Data Storage:
+Stores all persistent data, such as user profiles, queue information, and transaction logs.
+Notification System:
 
-Stores customer and agent profiles, queue data, and historical interaction logs.
-Reporting and Analytics Engine:
+Manages and sends push notifications to both customers and agents.
+Analytics Module:
 
-Analyzes data to produce insights on queue metrics and agent performance.
+Gathers data and provides insights through analytics and reporting tools.
 Workflow:
 
 Customer Queue Interaction:
 
-The customer opens the mobile app.
-They select the desired service and join the appropriate queue.
-The Queue Manager assigns a queue number and estimated wait time.
-The customer receives a push notification confirming their queue status.
+The customer launches the Flutter app.
+They authenticate (if required) and select a service to join a queue.
+A request is sent to the Django backend to add the customer to the queue.
+The backend confirms the queue position and estimated wait time, storing this in the database.
 Real-Time Queue Monitoring:
 
-The customer can view their real-time position in the queue via the app.
-Notifications alert the customer as they move up in the queue.
+The Flutter app periodically requests updates from the Django backend.
+The backend retrieves the customer's current queue status from the database.
+The customer receives real-time updates via the Flutter app.
 Agent Queue Management:
 
-Agents log into their mobile app UI.
-They view and accept incoming customer requests from the queue.
-Agents can see customer details and any specific requests or notes.
+Agents access their interface through the Flutter app.
+The app sends a request to the Django backend to fetch the queue list.
+Agents select a customer to serve, and the backend updates the queue status in the database.
 Service Interaction:
 
-The agent interacts with the customer, which can include in-app messaging or a call.
-The agent updates the request status as needed (e.g., In Progress, On Hold, Completed).
+Agents interact with customers using the in-app features (chat or call).
+After completing the service, agents update the status through the app.
+The Django backend processes the update and modifies the database accordingly.
 Completion and Feedback:
 
-Once the service is complete, the agent marks the request as resolved.
-The customer receives a notification and can leave feedback through the app.
+Customers are notified of the completion via the Flutter app.
+They can submit feedback, which the backend processes and stores for future reference.
 Data Analysis and Reporting:
 
-The backend system collects data from each interaction.
-The Reporting and Analytics Engine processes this data to create performance reports.
-Management accesses these reports via a secured section within the app or a web interface to make informed decisions.
+The Django backend collects transactional and operational data.
+The analytics module processes this data to generate reports.
+Management accesses these reports through a secure admin panel within the Flutter app or a web interface connected to the Django backend.
+Technical Notes:
 
+The connection between the Flutter app and the Django backend is typically done via RESTful APIs or GraphQL.
+The database could be a SQL database like PostgreSQL, which is well-supported by Django.
+The notification system could leverage Firebase Cloud Messaging (FCM) for cross-platform notifications.
+The analytics module could use Django's ORM for data querying, along with libraries like Pandas and NumPy for data analysis, or integrate with a service like Google Analytics.
