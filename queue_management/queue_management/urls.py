@@ -33,5 +33,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/', include('account.urls')),
     path('api/schedule/', include('schedule.urls')),
+    path('api/details/', include('details.urls')),
 
 ] 

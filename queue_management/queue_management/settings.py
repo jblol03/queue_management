@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'account',
-    'schedule'
+    'schedule',
+    'details',
+    # 'appointment',
+    # 'django_q',
 ]
 
 MIDDLEWARE = [
