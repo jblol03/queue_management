@@ -1,0 +1,127 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Queue Management System'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.account_circle),
+            onPressed: () {
+              // Navigate to user profile
+            },
+          ),
+        ],
+      ),
+      body: const Center(
+        child: Text('Home Page'),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Explore',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+        ],
+        onTap: (index) {
+          // Handle navigation
+          switch (index) {
+            case 0:
+              // Navigate to Home
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ExplorePage()),
+              );
+              break;
+            case 2:
+              // Navigate to Notifications
+              break;
+          }
+        },
+      ),
+    );
+  }
+}
+
+class ExplorePage extends StatelessWidget {
+  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _subCategoryController = TextEditingController();
+
+  ExplorePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Explore'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: <Widget>[
+            Autocomplete<String>(
+              optionsBuilder: (TextEditingValue textEditingValue) {
+                if (textEditingValue.text == '') {
+                  return const [];
+                }
+                return ['Medical', 'Law', 'Business']
+                    .where((option) => option.contains(textEditingValue.text));
+              },
+              onSelected: (String selection) {
+                // Do something when a suggestion is selected
+              },
+            ),
+            Autocomplete<String>(
+              optionsBuilder: (TextEditingValue textEditingValue) {
+                if (textEditingValue.text == '') {
+                  return const [];
+                }
+                return ['Dentist', 'Radiologist', 'Pathologist']
+                    .where((option) => option.contains(textEditingValue.text));
+              },
+              onSelected: (String selection) {
+                // Do something when a suggestion is selected
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Search'),
+              onPressed: () {
+                // Implement search functionality
+              },
+            ),
+            // Add widgets for displaying search results
+          ],
+        ),
+      ),
+    );
+  }
+}
