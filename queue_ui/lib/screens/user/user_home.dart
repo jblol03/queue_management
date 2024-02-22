@@ -93,11 +93,24 @@ class ExplorePage extends StatelessWidget {
                 if (textEditingValue.text == '') {
                   return const [];
                 }
-                return ['Medical', 'Law', 'Business']
-                    .where((option) => option.contains(textEditingValue.text));
+                return ['Medical', 'Law', 'Business'].where((option) => option
+                    .toLowerCase()
+                    .contains(textEditingValue.text.toLowerCase()));
               },
               onSelected: (String selection) {
                 // Do something when a suggestion is selected
+              },
+              fieldViewBuilder: (BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted) {
+                return TextField(
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter a category',
+                  ),
+                );
               },
             ),
             Autocomplete<String>(
@@ -105,13 +118,28 @@ class ExplorePage extends StatelessWidget {
                 if (textEditingValue.text == '') {
                   return const [];
                 }
-                return ['Dentist', 'Radiologist', 'Pathologist']
-                    .where((option) => option.contains(textEditingValue.text));
+                return ['Dentist', 'Radiologist', 'Pathologist'].where(
+                    (option) => option
+                        .toLowerCase()
+                        .contains(textEditingValue.text.toLowerCase()));
               },
               onSelected: (String selection) {
                 // Do something when a suggestion is selected
               },
+              fieldViewBuilder: (BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted) {
+                return TextField(
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter a sub-category',
+                  ),
+                );
+              },
             ),
+
             ElevatedButton(
               child: const Text('Search'),
               onPressed: () {

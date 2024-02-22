@@ -6,7 +6,7 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.1, // 10% of screen width
         height: MediaQuery.of(context).size.width * 0.05, // 5% of screen width
         child: Scaffold(
@@ -26,20 +26,20 @@ class DashboardPage extends StatelessWidget {
             itemBuilder: (context, index) {
               return ListTile(
                 leading: Text((index + 1).toString()), // Appointment number
-                title: Text('Appointment Name'), // Appointment name
+                title: const Text('Jay Billimoria'), // Appointment name
                 trailing: PopupMenuButton(
                   itemBuilder: (context) => [
-                    PopupMenuItem(
-                      child: Text('Remove'),
+                    const PopupMenuItem(
                       value: 1,
+                      child: Text('Remove'),
                     ),
-                    PopupMenuItem(
-                      child: Text('Done'),
+                    const PopupMenuItem(
                       value: 2,
+                      child: Text('Done'),
                     ),
-                    PopupMenuItem(
-                      child: Text('Re-call'),
+                    const PopupMenuItem(
                       value: 3,
+                      child: Text('Re-call'),
                     ),
                   ],
                   onSelected: (value) {
@@ -109,18 +109,6 @@ class ExplorePage extends StatelessWidget {
                 if (textEditingValue.text == '') {
                   return const [];
                 }
-                return ['Medical', 'Law', 'Business']
-                    .where((option) => option.contains(textEditingValue.text));
-              },
-              onSelected: (String selection) {
-                // Do something when a suggestion is selected
-              },
-            ),
-            Autocomplete<String>(
-              optionsBuilder: (TextEditingValue textEditingValue) {
-                if (textEditingValue.text == '') {
-                  return const [];
-                }
                 return ['Medical', 'Law', 'Business'].where((option) => option
                     .toLowerCase()
                     .contains(textEditingValue.text.toLowerCase()));
@@ -128,7 +116,46 @@ class ExplorePage extends StatelessWidget {
               onSelected: (String selection) {
                 // Do something when a suggestion is selected
               },
+              fieldViewBuilder: (BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted) {
+                return TextField(
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  decoration: const InputDecoration(
+                    hintText: 'Category',
+                  ),
+                );
+              },
             ),
+            Autocomplete<String>(
+              optionsBuilder: (TextEditingValue textEditingValue) {
+                if (textEditingValue.text == '') {
+                  return const [];
+                }
+                return ['Dentist', 'Radiologist', 'Pathologist'].where(
+                    (option) => option
+                        .toLowerCase()
+                        .contains(textEditingValue.text.toLowerCase()));
+              },
+              onSelected: (String selection) {
+                // Do something when a suggestion is selected
+              },
+              fieldViewBuilder: (BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted) {
+                return TextField(
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  decoration: const InputDecoration(
+                    hintText: 'Sub-category',
+                  ),
+                );
+              },
+            ),
+
             ElevatedButton(
               child: const Text('Save'),
               onPressed: () {

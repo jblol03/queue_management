@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:queue_ui/screens/auth.dart';
 import 'package:queue_ui/screens/business/business_dashboard.dart';
 
 void main() {
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const DashboardPage(),
+      home: const LoginPage(),
     );
   }
 }

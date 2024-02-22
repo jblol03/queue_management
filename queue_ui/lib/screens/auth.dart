@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:queue_ui/screens/business/business_dashboard.dart';
+import 'package:queue_ui/services/api_services.dart';
 
 void main() => runApp(const MyApp());
 
@@ -25,6 +27,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final AuthService authService = AuthService();
   final TextEditingController _businessEmailController =
       TextEditingController();
   final TextEditingController _businessPasswordController =
@@ -109,10 +112,25 @@ class _LoginPageState extends State<LoginPage> {
           obscureText: true,
         ),
         ElevatedButton(
-          child: const Text('Login'),
-          onPressed: () {
-            print('Business Login button pressed');
+          onPressed: () async {
+            //Call API Login
+            bool success = await authService.login(
+                _businessEmailController.text,
+                _businessPasswordController.text);
+
+            if (success) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DashboardPage()),
+              );
+            } else {
+              //Handle Login Failure
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text("Login Failed. Please try again."),
+              ));
+            }
           },
+          child: const Text("Login"),
         ),
       ],
     );
