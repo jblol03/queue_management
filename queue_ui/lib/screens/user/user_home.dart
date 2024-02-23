@@ -1,19 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
+import '';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -59,7 +45,7 @@ class HomePage extends StatelessWidget {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ExplorePage()),
+                MaterialPageRoute(builder: (context) => UserExplorePage()),
               );
               break;
             case 2:
@@ -72,11 +58,11 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class ExplorePage extends StatelessWidget {
+class UserExplorePage extends StatelessWidget {
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _subCategoryController = TextEditingController();
 
-  ExplorePage({Key? key}) : super(key: key);
+  UserExplorePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

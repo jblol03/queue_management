@@ -1,5 +1,5 @@
 from django.core.mail import EmailMessage
-import os
+from queue_management import settings
 
 class Util:
   @staticmethod
@@ -7,7 +7,9 @@ class Util:
     email = EmailMessage(
       subject=data['subject'],
       body=data['body'],
-      from_email=os.environ.get('EMAIL_FROM'),
-      to=[data['to_email']]
+      from_email=settings.EMAIL_HOST_USER,
+      to=[data['to_email']],
+      # reply_to=[from_email],
+
     )
     email.send()

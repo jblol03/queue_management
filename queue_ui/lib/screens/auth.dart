@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:queue_ui/screens/business/business_dashboard.dart';
+import 'package:queue_ui/screens/user/user_home.dart';
 import 'package:queue_ui/services/api_services.dart';
 
 void main() => runApp(const MyApp());
@@ -65,7 +66,9 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       Expanded(
                         child: TextButton(
-                          child: const Text('Business'),
+                          child: const Text(
+                            'Business',
+                          ),
                           onPressed: () {
                             setState(() {
                               _isBusiness = true;
@@ -163,7 +166,10 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               child: const Text('Submit OTP'),
               onPressed: () {
-                print('Submit OTP button pressed');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
               },
             ),
             TextButton(

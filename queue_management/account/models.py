@@ -74,5 +74,8 @@ class User(AbstractBaseUser):
       # Simplest possible answer: All admins are staff
       return self.is_admin
 
+class EndUser(models.Model):
+    email = models.EmailField(max_length=255)
 
-
+    def __str__(self):
+        return self.email
