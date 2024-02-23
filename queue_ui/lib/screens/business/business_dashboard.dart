@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -91,6 +92,7 @@ class DashboardPage extends StatelessWidget {
 class ExplorePage extends StatelessWidget {
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _subCategoryController = TextEditingController();
+  final TextEditingController _companyController = TextEditingController();
 
   ExplorePage({Key? key}) : super(key: key);
 
@@ -155,11 +157,50 @@ class ExplorePage extends StatelessWidget {
                 );
               },
             ),
-
+            TextField(
+              controller: _companyController,
+              decoration: const InputDecoration(
+                hintText: 'Company Name',
+              ),
+            ),
             ElevatedButton(
               child: const Text('Save'),
               onPressed: () {
-                // Implement search functionality
+                // Implement savw functionality
+              },
+            ),
+            Divider(
+              color: Colors.grey,
+              height: 30,
+              thickness: 1,
+            ),
+            MultiSelectDialogField(
+              items: [
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+                'Sunday'
+              ].map((day) => MultiSelectItem<String>(day, day)).toList(),
+              title: Text("Select Days"),
+              selectedColor: Colors.blue,
+              onConfirm: (values) {
+                // Handle the selected values
+              },
+            ),
+
+            TextField(
+              decoration: InputDecoration(
+                labelText: "Slots",
+              ),
+            ),
+
+            ElevatedButton(
+              child: const Text('Add Appointment'),
+              onPressed: () {
+                // Implement add appointment functionality
               },
             ),
             // Add widgets for displaying search results
