@@ -56,7 +56,7 @@ class DashboardPage extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
-              label: 'Explore',
+              label: 'Details',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications),
@@ -72,7 +72,7 @@ class DashboardPage extends StatelessWidget {
               case 1:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ExplorePage()),
+                  MaterialPageRoute(builder: (context) => DetailsPage()),
                 );
                 break;
               case 2:
@@ -86,18 +86,18 @@ class DashboardPage extends StatelessWidget {
   }
 }
 
-class ExplorePage extends StatelessWidget {
+class DetailsPage extends StatelessWidget {
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _subCategoryController = TextEditingController();
   final TextEditingController _companyController = TextEditingController();
 
-  ExplorePage({Key? key}) : super(key: key);
+  DetailsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Explore'),
+        title: const Text('Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),

@@ -66,8 +66,23 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       Expanded(
                         child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                if (_isBusiness)
+                                  return Color.fromARGB(255, 164, 54,
+                                      184); // The color when _isBusiness is true
+                                return Color.fromARGB(255, 178, 170,
+                                    179); // Use the component's default.
+                              },
+                            ),
+                          ),
                           child: const Text(
                             'Business',
+                            style: TextStyle(
+                                color: Colors
+                                    .white), // Change the text color to white
                           ),
                           onPressed: () {
                             setState(() {
@@ -78,7 +93,24 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Expanded(
                         child: TextButton(
-                          child: const Text('User'),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                if (!_isBusiness)
+                                  return Color.fromARGB(255, 164, 54,
+                                      184); // The color when _isBusiness is false
+                                return Color.fromARGB(255, 178, 170,
+                                    179); // Use the component's default.
+                              },
+                            ),
+                          ),
+                          child: const Text(
+                            'User',
+                            style: TextStyle(
+                                color: Colors
+                                    .white), // Change the text color to white
+                          ),
                           onPressed: () {
                             setState(() {
                               _isBusiness = false;
