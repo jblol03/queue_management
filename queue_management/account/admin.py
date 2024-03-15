@@ -1,6 +1,7 @@
 from django.contrib import admin
-from account.models import User
+from account.models import User, UserManager, EndUser
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django import forms
 
 class UserModelAdmin(BaseUserAdmin):
   # The fields to be used in displaying the User model.
@@ -25,6 +26,24 @@ class UserModelAdmin(BaseUserAdmin):
   ordering = ('email', 'id')
   filter_horizontal = ()
 
+class EndUserAdmin(BaseUserAdmin):
+    list_display = ('email', 'name', 'otp')
+    list_filter = ('is_enduser',)
+    fieldsets = (
+        (None, {'fields': ('email', 'otp')}),
+        ('Personal info', {'fields': ('name',)}),
+    )
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'name', 'otp',),
+        }),
+    )
+    search_fields = ('email',)
+    ordering = ('email','id')
+    filter_horizontal = ()
 
 # Now register the new UserModelAdmin...
 admin.site.register(User, UserModelAdmin)
+admin.site.register(EndUser, EndUserAdmin)

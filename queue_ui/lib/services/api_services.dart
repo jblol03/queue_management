@@ -24,6 +24,27 @@ class AuthService {
   //   // Return true if registration is successful, false otherwise
   //   return true;
   // }
+
+  Future<bool> user_login(String email, String otp) async {
+    // Check if OTP is blank
+    if (otp == null || otp.trim().isEmpty) {
+      // Handle empty OTP field
+      return false;
+    }
+
+    // Continue with login if OTP is not blank
+    final response = await http.post(
+      Uri.parse('$apiUrl/api/user/enduser_login/'),
+      body: {'email': email, 'otp': otp},
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      // Handle Login Failure
+      return false;
+    }
+  }
 }
 
 class DetailsService {

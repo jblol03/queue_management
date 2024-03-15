@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Day(models.Model):
     DAYS_OF_WEEK = [
@@ -25,10 +26,11 @@ class Appointment(models.Model):
         return f'{", ".join(str(day) for day in self.days.all())} - {self.slot} slots'
 
 class Booking(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    day = models.ForeignKey(Day, on_delete=models.CASCADE, default = 1)
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
-    # user = models.ForeignKey('account.EndUser', on_delete=models.CASCADE)
+    user = models.ForeignKey('account.EndUser', on_delete=models.CASCADE, null = True)
 
     def __str__(self):
-        return f'{self.appointment} '
-    # - {self.user.username}
+        return f'{self.appointment} - {self.user.name}'
     

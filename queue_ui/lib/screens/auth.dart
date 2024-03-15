@@ -197,11 +197,20 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             ElevatedButton(
               child: const Text('Submit OTP'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
+              onPressed: () async {
+                bool success = await authService.user_login(
+                    _userEmailController.text, _otpController.text);
+                if (success) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+                } else {
+                  //Handle Login Failure
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Login Failed. Please try again."),
+                  ));
+                }
               },
             ),
             TextButton(

@@ -7,6 +7,7 @@ from account.renderers import UserRenderer
 from rest_framework.renderers import BrowsableAPIRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from account.models import EndUser
 
 # Generate Token Manually
 def get_tokens_for_user(user):
@@ -76,13 +77,42 @@ class UserPasswordResetView(APIView):
     serializer.is_valid(raise_exception=True)
     return Response({'msg':'Password Reset Successfully'}, status=status.HTTP_200_OK)
 
-class EndUserView(APIView):
-  serializer_class = EndUserSerializer
-  
-  def post(self, request, format=None):
-    serializer = self.serializer_class(data=request.data)
-    if serializer.is_valid():
-      serializer.save()
-      return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+class EndUserRegistration(APIView):
+    def post(self, request):
+        serializer = EndUserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EndUserLogin(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+        otp = request.data.get('otp')
+
+        if email:
+            user = self.authenticate_user(email, otp)
+            if user:
+                return Response({'message': 'OTP authentication successful'}, status=status.HTTP_200_OK)
+            else:
+                # Generate a new OTP for the provided email
+                try:
+                    user = EndUser.objects.get(email=email)
+                    user.generate_otp()
+                    user.save()
+                    return Response({'message': 'New OTP generated successfully', 'email': email,}, status=status.HTTP_200_OK)
+                except EndUser.DoesNotExist:
+                    return Response({'message': 'Invalid email'}, status=status.HTTP_400_BAD_REQUEST)
+        elif otp:
+            return Response({'message': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'message': 'Email and OTP are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    def authenticate_user(self, email, otp):
+        try:
+            user = EndUser.objects.get(email=email)
+            if user.otp == otp:
+                return user
+        except EndUser.DoesNotExist:
+            pass
+        return None

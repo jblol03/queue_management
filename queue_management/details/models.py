@@ -12,7 +12,12 @@ class Sub_Category (models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.sub_category
-    def __str__(self):
-        return self.category
+        return f"{self.sub_category, self.category}"
+   
+class Organization (models.Model):
+    organization = models.CharField(max_length = 300, unique = True)
+    sub_category = models.ForeignKey(Sub_Category, on_delete=models.CASCADE)    
+    user = models.ForeignKey('account.User', on_delete=models.CASCADE, null = True)
 
+    def __str__(self):
+        return self.organization
