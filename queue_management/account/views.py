@@ -8,7 +8,7 @@ from rest_framework.renderers import BrowsableAPIRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from account.models import EndUser
-
+from account.utils import Util
 # Generate Token Manually
 def get_tokens_for_user(user):
   refresh = RefreshToken.for_user(user)
@@ -89,17 +89,16 @@ class EndUserLogin(APIView):
     def post(self, request):
         email = request.data.get('email')
         otp = request.data.get('otp')
-
         if email:
             user = self.authenticate_user(email, otp)
             if user:
                 return Response({'message': 'OTP authentication successful'}, status=status.HTTP_200_OK)
             else:
-                # Generate a new OTP for the provided email
                 try:
                     user = EndUser.objects.get(email=email)
-                    user.generate_otp()
+                    user.otp = Util.generate_otp()  # use the utility method here
                     user.save()
+                    Util.send_otp_email(email, user.otp)  # and here
                     return Response({'message': 'New OTP generated successfully', 'email': email,}, status=status.HTTP_200_OK)
                 except EndUser.DoesNotExist:
                     return Response({'message': 'Invalid email'}, status=status.HTTP_400_BAD_REQUEST)
@@ -107,7 +106,6 @@ class EndUserLogin(APIView):
             return Response({'message': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'message': 'Email and OTP are required'}, status=status.HTTP_400_BAD_REQUEST)
-
     def authenticate_user(self, email, otp):
         try:
             user = EndUser.objects.get(email=email)

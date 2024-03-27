@@ -6,6 +6,16 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> names = [
+      'Jay Billimoria',
+      'John Doe',
+      'Jane Doe',
+      'Emma Watson',
+      'Tom Cruise',
+      'Robert Downey Jr.',
+      'Chris Evans'
+    ]; // Add your names list here
+
     return Card(
       // 5% of screen width
       child: Scaffold(
@@ -21,11 +31,12 @@ class DashboardPage extends StatelessWidget {
           ],
         ),
         body: ListView.builder(
-          itemCount: 20, // Replace this with the length of your data list
+          itemCount:
+              names.length, // Replace this with the length of your data list
           itemBuilder: (context, index) {
             return ListTile(
               leading: Text((index + 1).toString()), // Appointment number
-              title: const Text('Jay Billimoria'), // Appointment name
+              title: Text(names[index]), // Appointment name
               trailing: PopupMenuButton(
                 itemBuilder: (context) => [
                   const PopupMenuItem(

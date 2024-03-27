@@ -17,13 +17,11 @@ class Util:
     )
     email.send()
   
-  @staticmethod
   def generate_otp(length=6):
       characters = string.digits
       otp = ''.join(random.choice(characters) for _ in range(length))
       return otp
   
-  @staticmethod
   def send_otp_email(email, otp):
     subject = 'Your OTP for Login'
     message = f'Your OTP is: {otp}'

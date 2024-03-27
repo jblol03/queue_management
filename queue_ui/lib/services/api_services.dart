@@ -62,3 +62,17 @@ class DetailsService {
     }
   }
 }
+
+class Booking {
+  final String apiUrl = 'http://127.0.0.1:8000';
+  Future<List> fetchBookings() async {
+    final response =
+        await http.get(Uri.parse('$apiUrl/api/appointment/bookings/'));
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load bookings');
+    }
+  }
+}
